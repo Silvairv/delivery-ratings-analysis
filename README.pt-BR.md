@@ -2,7 +2,7 @@
 
 [English](README.md) | **Português**
 
-**[Abrir o dashboard online](https://delivery-ratings-analysis.streamlit.app/)** (a primeira carga leva cerca de 1 minuto: o app lê ~40 mil pedidos)
+**[Abrir o dashboard online](https://delivery-ratings-analysis.streamlit.app/)** (a primeira carga leva cerca de 1 minuto: o app lê ~40 mil pedidos; use a barra lateral para alternar entre inglês e português)
 
 Análise de 40 mil pedidos de uma operação de dark kitchen multimarca (set–out/2026, dados anonimizados) para responder:
 
@@ -52,7 +52,7 @@ streamlit run app.py
 
 ## Roadmap
 
-- [ ] Dashboard em inglês (seletor de idioma)
+- [x] Dashboard em inglês (seletor de idioma)
 - [ ] Comparar marcas e cidades
 - [ ] Controlar efeito de loja e horário (regressão)
 - [ ] Carga de dados mais rápida (Parquet no lugar de Excel)
