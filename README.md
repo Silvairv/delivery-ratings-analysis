@@ -2,7 +2,7 @@
 
 **English** | [Português](README.pt-BR.md)
 
-**[Open the live dashboard](https://delivery-ratings-analysis.streamlit.app/)** (first load takes about 1 minute: the app reads ~40k orders; the dashboard UI is currently in Portuguese)
+**[Open the live dashboard](https://delivery-ratings-analysis.streamlit.app/)** (first load takes about 1 minute: the app reads ~40k orders; use the sidebar to switch between English and Portuguese)
 
 Analysis of 40k orders from a multi-brand dark kitchen delivery operation (Sep–Oct 2026, anonymized data), answering one business question:
 
@@ -58,7 +58,7 @@ streamlit run app.py
 
 ## Roadmap
 
-- [ ] English version of the dashboard UI (language toggle)
+- [x] English version of the dashboard UI (language toggle)
 - [ ] Compare brands and cities
 - [ ] Control for store and time-of-day effects (regression)
 - [ ] Faster data loading (Parquet instead of Excel)
