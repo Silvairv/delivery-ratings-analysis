@@ -8,6 +8,8 @@ Análise de 40 mil pedidos de uma operação de dark kitchen multimarca (set–o
 
 Dashboard em **Streamlit** com filtros de mês, cidade e marca, mais um relatório completo com metodologia (`Relatorio_Trabalho_Final.pdf`).
 
+**[Abrir o dashboard online](https://delivery-ratings-analysis.streamlit.app/)** (a primeira carga leva cerca de 1 minuto: o app lê ~40 mil pedidos)
+
 ![Gráficos do dashboard](docs/dashboard.png)
 
 ## Principais resultados
