@@ -34,7 +34,7 @@ Only about 1 in 10 orders is rated, so understanding what drives a store to be r
 - **Type conversions:** prep time (text with decimal comma) to numeric; rating scale 100–500 to 1–5.
 - **Engineered features:** prep-time buckets, orders-per-day buckets, store-day records, 5-star flag, month, brand.
 
-The full methodology and conclusions are in the report (in Portuguese): [`Relatorio_Trabalho_Final.pdf`](Relatorio_Trabalho_Final.pdf).
+The full methodology and conclusions are in the report (in Portuguese): [`Relatorio_Trabalho_Final.pdf`](Relatorio_Trabalho_Final.pdf). An English summary is in [`REPORT_SUMMARY_EN.md`](REPORT_SUMMARY_EN.md).
 
 ## Run it locally
 
@@ -53,6 +53,7 @@ streamlit run app.py
 | `app.py` | Streamlit dashboard (filters by month, city and brand) |
 | `_Dados do pedido(...).xlsx` | September and October order exports (anonymized) |
 | `Relatorio_Trabalho_Final.pdf` | Report with methodology and conclusions (Portuguese) |
+| `REPORT_SUMMARY_EN.md` | English summary of the report |
 
 **Stack:** Python, pandas, NumPy, Matplotlib, Streamlit.
 
