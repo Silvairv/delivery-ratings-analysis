@@ -1,29 +1,42 @@
-# Avaliações em Delivery: volume de pedidos e tempo de preparo
+# Delivery Ratings Analysis: how order volume and prep time affect customer ratings
 
-**PT** | [EN](#english)
+**English** | [Português](README.pt-BR.md)
 
-Análise de 40 mil pedidos de uma operação de dark kitchen multimarca (set–out/2026, dados anonimizados) para responder:
+**[Open the live dashboard](https://delivery-ratings-analysis.streamlit.app/)** (first load takes about 1 minute: the app reads ~40k orders; the dashboard UI is currently in Portuguese)
 
-> Como o volume de pedidos e a performance de preparo influenciam a avaliação que as lojas recebem dos clientes?
+Analysis of 40k orders from a multi-brand dark kitchen delivery operation (Sep–Oct 2026, anonymized data), answering one business question:
 
-Dashboard em **Streamlit** com filtros de mês, cidade e marca, mais um relatório completo com metodologia (`Relatorio_Trabalho_Final.pdf`).
+> How do order volume and kitchen prep performance (lateness and prep time) affect the ratings stores receive from customers?
 
-**[Abrir o dashboard online](https://delivery-ratings-analysis.streamlit.app/)** (a primeira carga leva cerca de 1 minuto: o app lê ~40 mil pedidos)
+Only about 1 in 10 orders is rated, so understanding what drives a store to be rated, and rated well, helps prioritize operational improvements.
 
-![Gráficos do dashboard](docs/dashboard.png)
+![Dashboard charts](docs/dashboard_en.png)
 
-## Principais resultados
+## Key findings
 
-| Pergunta | Resultado |
+| Question | Result |
 |---|---|
-| O volume muda a **chance** de ser avaliado? | Sim: de 27% (1–5 pedidos/dia) a 93% (21+). Em boa parte é efeito mecânico: só 9,6% dos pedidos são avaliados. |
-| O volume muda a **qualidade** da nota? | Não: a proporção de notas 5 fica em 77–78% a partir de 6 pedidos/dia. |
-| O tempo de preparo muda a nota? | Sim: nota média cai de 4,60 (até 10 min) para 3,90 (41+ min). A queda se acentua após 30 min. |
-| Onde o preparo vira "atrasado"? | Entre 20 e 30 min (3% de atraso até 10 min; 53% entre 21–30; ~98% acima). |
+| Does order volume change the **chance** of being rated? | Yes: from 27% (1–5 orders/day) to 93% (21+). Largely mechanical, since only 9.6% of orders are rated. |
+| Does order volume change **rating quality**? | No: the share of 5-star ratings stays at 77–78% from 6 orders/day. |
+| Does prep time change the rating? | Yes: average rating falls from 4.60 (up to 10 min) to 3.90 (41+ min); the drop accelerates after 30 min. |
+| Where does prep become "late"? | Between 20 and 30 min (3% late up to 10 min; 53% at 21–30; ~98% above). |
 
-**Limitações:** são associações, não causa; só 9,6% dos pedidos são avaliados (possível viés); a faixa 41+ min tem apenas 134 avaliações; a análise não separa efeito de loja, marca ou horário.
+**Takeaway for operations:** keeping prep time under 20–30 minutes protects the rating; getting more orders rated is a volume problem, not a prep-time problem.
 
-## Como rodar
+**Limitations:** results are associations, not causal effects; only 9.6% of orders are rated (possible self-selection bias); the 41+ min bucket has only 134 ratings; store, brand and time-of-day effects are not separated.
+
+## Data cleaning decisions
+
+- **Merged** two order exports (Sep: 19,096 rows; Oct: 21,081) into 40,177 orders and 48 variables; 0 duplicate order IDs.
+- **Cancelled orders removed** (3,658), leaving 36,519 valid orders: a cancelled order is not a sale and none had a rating.
+- **Missing ratings kept as `NaN`:** null means the customer did not rate; filling it would invent a rating nobody gave.
+- **Prep time of `0` treated as "not measured"** (the store never clicked "ready for pickup") and converted to `NaN`. Keeping zeros would have lowered the mean prep time from 16.8 to 14.9 min and inflated the 0–10 min bucket.
+- **Type conversions:** prep time (text with decimal comma) to numeric; rating scale 100–500 to 1–5.
+- **Engineered features:** prep-time buckets, orders-per-day buckets, store-day records, 5-star flag, month, brand.
+
+The full methodology and conclusions are in the report (in Portuguese): [`Relatorio_Trabalho_Final.pdf`](Relatorio_Trabalho_Final.pdf).
+
+## Run it locally
 
 ```bash
 git clone https://github.com/Silvairv/delivery-ratings-analysis.git
@@ -32,54 +45,25 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Estrutura
+## Project structure
 
-| Arquivo | Função |
+| File | Purpose |
 |---|---|
-| `tratamento.py` | Carga, limpeza (cancelados, zeros, tipos) e criação de variáveis |
-| `app.py` | Dashboard Streamlit |
-| `_Dados do pedido(...).xlsx` | Bases de setembro e outubro (anonimizadas) |
-| `Relatorio_Trabalho_Final.pdf` | Relatório com metodologia e conclusões |
+| `tratamento.py` | Data loading, cleaning and feature engineering |
+| `app.py` | Streamlit dashboard (filters by month, city and brand) |
+| `_Dados do pedido(...).xlsx` | September and October order exports (anonymized) |
+| `Relatorio_Trabalho_Final.pdf` | Report with methodology and conclusions (Portuguese) |
 
-## Tratamentos principais
-
-- Remoção de pedidos cancelados (3.658) → 36.519 pedidos válidos.
-- Nulos de avaliação mantidos como `NaN` (nulo = cliente não avaliou).
-- Tempo de preparo `0` tratado como "não medido" (loja não marcou pronto) e convertido em `NaN`.
-- Nota convertida da escala 100–500 para 1–5.
+**Stack:** Python, pandas, NumPy, Matplotlib, Streamlit.
 
 ## Roadmap
 
-- [ ] Comparar marcas e cidades
-- [ ] Controlar efeito de loja e horário (regressão)
-- [ ] Testes automatizados para `tratamento.py`
-- [ ] Deploy público do dashboard (Streamlit Community Cloud)
+- [ ] English version of the dashboard UI (language toggle)
+- [ ] Compare brands and cities
+- [ ] Control for store and time-of-day effects (regression)
+- [ ] Faster data loading (Parquet instead of Excel)
+- [ ] Automated tests for `tratamento.py`
 
-## Dados
+## Data
 
-Os dados foram anonimizados (lojas e marcas codificadas, comentários removidos). Uso para fins educacionais e de portfólio.
-
----
-
-## English
-
-Analysis of 40k orders from a multi-brand delivery dark kitchen operation (Sep–Oct 2026, anonymized data) answering: *how do order volume and kitchen prep performance affect the ratings stores receive?*
-
-Includes a **Streamlit** dashboard (filters by month, city, brand) and a full report in Portuguese (`Relatorio_Trabalho_Final.pdf`).
-
-**Key findings**
-
-- Order volume changes the *chance* of being rated (27% → 93% per store-day), largely mechanically since only 9.6% of orders are rated. It does **not** change rating *quality* (share of 5-star ratings stays ~77–78% from 6 orders/day).
-- Prep time **does** affect rating quality: mean rating falls from 4.60 (≤10 min) to 3.90 (41+ min), with the drop accelerating after 30 min.
-- Orders flip to "late" between 20 and 30 minutes.
-
-**Caveats:** associations, not causal; only 9.6% of orders are rated; 41+ min bucket has few ratings (134); store/brand/time-of-day effects are not separated.
-
-**Run locally**
-
-```bash
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-**Stack:** Python, pandas, NumPy, Matplotlib, Streamlit.
+Data is anonymized (stores and brands coded, customer comments removed). Shared for educational and portfolio purposes.
