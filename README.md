@@ -8,6 +8,8 @@ Análise de 40 mil pedidos de uma operação de dark kitchen multimarca (set–o
 
 Dashboard em **Streamlit** com filtros de mês, cidade e marca, mais um relatório completo com metodologia (`Relatorio_Trabalho_Final.pdf`).
 
+![Gráficos do dashboard](docs/dashboard.png)
+
 ## Principais resultados
 
 | Pergunta | Resultado |
